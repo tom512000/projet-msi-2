@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello EmpruntController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <form action="*" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">Veuillez initialisé votre emprunt</h1>
+
+        <label for="valeurDep">Valeur de départ :</label>
+        <input type="number" id="valeurDep" name="valeurDep" required><br><br>
+
+        <label for="tauxInteret">Taux d'intérêt (%):</label>
+        <input type="number" id="tauxInteret" name="tauxInteret" required><br><br>
+
+        <label for="duree">Durée (en années) :</label>
+        <input type="number" id="duree" name="duree" required><br><br>
+
+        <label for="ChoixDuree"> Choisir la durée</label>
+        <select name="Choix" id="ChoixDuree">
+            <option value="">--Choisi une option--</option>
+            <option value="Mois">Mois</option>
+            <option value="Trimestre">Trimestre</option>
+            <option value="Semestre">Semestre</option>
+            <option value="Annee">Année</option>
+        </select>
+        <button type="submit">Calculer</button>
+    </form>
+</div>
+{% endblock %}
