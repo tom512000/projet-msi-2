@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats de l'Emprunt{% endblock %}
+
+{% block body %}
+    <style>
+        .resultats-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .resultats-wrapper table { width: 100%; border-collapse: collapse; }
+        .resultats-wrapper th, .resultats-wrapper td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .resultats-wrapper th { background-color: #f2f2f2; }
+    </style>
+
+    <div class="resultats-wrapper">
+        <h2>Résultats de l'Emprunt</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Periode</th>
+                <th>Capital restant en Debut de période</th>
+                <th>Intérêts de la période</th>
+                <th>Amortissement du Capital</th>
+                <th>Annuité d'emprunt</th>
+                <th>Capital restant dû en fin de période</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set totalInterets = 0 %}
+            {% set totalCapitalAmorti = 0 %}
+            {% set totalAnnuite = 0 %}
+            {% for emprunt in tableauEmprunt %}
+                <tr>
+                    <td>{{ emprunt.periode }}</td>
+                    <td>{{ emprunt.capitalRestantDu|number_format(2, ',', ' ') }} €</td>
+                    <td>{{ emprunt.interets|number_format(2, ',', ' ') }} €</td>
+                    <td>{{ emprunt.capitalRembourse|number_format(2, ',', ' ') }} €</td>
+                    <td>{{ emprunt.annuite|number_format(2, ',', ' ') }} €</td>
+                    <td>{{ emprunt.capitalFin|number_format(2, ',', ' ') }} €</td>
+                </tr>
+                {% set totalInterets = totalInterets + emprunt.interets %}
+                {% set totalCapitalAmorti = totalCapitalAmorti + emprunt.capitalRembourse %}
+                {% set totalAnnuite = totalAnnuite + emprunt.annuite %}
+            {% endfor %}
+            <tr>
+                <th>Total</th>
+                <th></th> <!-- Suppression du total du capital début -->
+                <th>{{ totalInterets|number_format(2, ',', ' ') }} €</th>
+                <th>{{ totalCapitalAmorti|number_format(2, ',', ' ') }} €</th>
+                <th>{{ totalAnnuite|number_format(2, ',', ' ') }} €</th>
+                <th></th> <!-- Pas de total pour le capital fin car cela ne correspondrait pas à un total logique -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
